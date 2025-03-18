@@ -1,0 +1,79 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f8f8f8;
+}
+
+.header {
+  background-color: #f7ebcc;
+  color: black;
+  text-align: center;
+  padding: 20px;
+}
+
+.header p a {
+  color: black;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+.header p a:hover {
+  text-decoration: underline;
+}
+
+.room-list {
+  width: 80%;
+  margin: 20px auto;
+}
+
+.room {
+  display: flex;
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.room img {
+  width: 50%;
+  object-fit: cover;
+}
+
+.room-info {
+  padding: 20px;
+  width: 50%;
+}
+
+.room-info h2 {
+  margin-top: 0;
+  color: #333;
+}
+
+.room-info p {
+  margin: 5px 0;
+  color: #666;
+}
+
+.book-btn {
+  background-color: #f7ebcc;
+  color: black;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.book-btn:hover {
+  background-color: #f7ebcc;
+}
+
+.price {
+  font-size: 18px;
+  font-weight: bold;
+  color: #f7ebcc;
+  margin-top: 10px;
+}
+
+
