@@ -8,6 +8,8 @@
 <%@page import="dao.RoleDAO"%>
 <%@page import="model.Users"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html lang="vi">
     <head>
@@ -29,7 +31,8 @@
                 --gold-light: rgba(255, 215, 0, 0.15);
                 --gold-bright: #FFC107;
                 --gold-border: rgba(255, 215, 0, 0.5);
-                --red-danger: #FF4136;
+                --success-green: #28a745;
+                --pending-orange: #fd7e14;
                 --bg-dark: #0A0A0A;
             }
             
@@ -38,19 +41,19 @@
                 color: var(--gold-primary);
                 font-family: 'Poppins', sans-serif;
                 background-image: 
-                    radial-gradient(circle at 25% 25%, rgba(255, 215, 0, 0.05) 2%, transparent 5%),
-                    radial-gradient(circle at 75% 75%, rgba(255, 215, 0, 0.05) 2%, transparent 5%);
-                background-size: 100px 100px;
+                    radial-gradient(circle at 10% 20%, rgba(255, 215, 0, 0.03) 2%, transparent 5%),
+                    radial-gradient(circle at 90% 80%, rgba(255, 215, 0, 0.03) 2%, transparent 5%);
+                background-size: 120px 120px;
             }
             
             .page-container {
-                max-width: 1100px;
+                max-width: 1200px;
                 margin: 0 auto;
                 padding: 0 15px;
             }
             
             .admin-header {
-                padding: 30px 0 10px;
+                padding: 30px 0 20px;
                 border-bottom: 1px solid var(--gold-border);
                 margin-bottom: 30px;
                 display: flex;
@@ -75,6 +78,21 @@
                 background: linear-gradient(90deg, var(--gold-primary), transparent);
                 bottom: -10px;
                 left: 0;
+            }
+            
+            .user-info {
+                font-size: 0.9rem;
+                display: flex;
+                align-items: center;
+                background: var(--gold-light);
+                padding: 8px 15px;
+                border-radius: 20px;
+                border: 1px solid var(--gold-border);
+            }
+            
+            .user-info i {
+                margin-right: 8px;
+                color: var(--gold-secondary);
             }
             
             .stats-row {
@@ -124,150 +142,7 @@
                 border-radius: 15px;
                 padding: 25px;
                 box-shadow: 0 0 25px rgba(255, 215, 0, 0.15);
-            }
-            
-            .table-container {
-                overflow-x: auto;
-                margin-top: 20px;
-                border-radius: 12px;
-                box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-            }
-            
-            .user-table {
-                width: 100%;
-                border-collapse: separate;
-                border-spacing: 0;
-                overflow: hidden;
-            }
-            
-            .user-table thead tr {
-                background: linear-gradient(45deg, var(--gold-secondary), var(--gold-primary));
-                color: black;
-                font-weight: 600;
-                text-transform: uppercase;
-                letter-spacing: 1px;
-            }
-            
-            .user-table thead th {
-                padding: 15px 12px;
-                text-align: center;
-                font-size: 0.9rem;
-            }
-            
-            .user-table tbody tr {
-                border-bottom: 1px solid rgba(255, 215, 0, 0.1);
-                transition: all 0.3s ease;
-            }
-            
-            .user-table tbody tr:hover {
-                background-color: rgba(255, 215, 0, 0.05);
-                transform: scale(1.005);
-            }
-            
-            .user-table td {
-                padding: 15px 12px;
-                vertical-align: middle;
-                text-align: center;
-                font-size: 0.9rem;
-            }
-            
-            .user-table td:nth-child(2) {
-                font-weight: 500;
-            }
-            
-            .user-table .user-role {
-                display: inline-block;
-                padding: 5px 12px;
-                border-radius: 20px;
-                font-size: 0.8rem;
-                font-weight: 500;
-            }
-            
-            .user-role.admin {
-                background-color: rgba(255, 65, 54, 0.2);
-                color: #FF4136;
-            }
-            
-            .user-role.user {
-                background-color: rgba(46, 204, 113, 0.2);
-                color: #2ECC71;
-            }
-            
-            .action-btn {
-                padding: 8px 15px;
-                border-radius: 8px;
-                border: none;
-                cursor: pointer;
-                font-weight: 500;
-                font-size: 0.8rem;
-                transition: all 0.3s ease;
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-                margin: 0 3px;
-            }
-            
-            .delete-btn {
-                background-color: rgba(255, 65, 54, 0.2);
-                color: var(--red-danger);
-            }
-            
-            .delete-btn:hover {
-                background-color: var(--red-danger);
-                color: white;
-                transform: scale(1.05);
-                box-shadow: 0 0 10px rgba(255, 65, 54, 0.5);
-            }
-            
-            .edit-btn {
-                background-color: rgba(255, 215, 0, 0.2);
-                color: var(--gold-primary);
-            }
-            
-            .edit-btn:hover {
-                background-color: var(--gold-primary);
-                color: black;
-                transform: scale(1.05);
-                box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
-            }
-            
-            .btn-icon {
-                margin-right: 5px;
-            }
-            
-            .back-btn {
-                background: linear-gradient(45deg, var(--gold-primary), var(--gold-secondary));
-                color: black;
-                border: none;
-                padding: 12px 25px;
-                border-radius: 30px;
-                font-weight: 600;
-                font-size: 1rem;
-                text-transform: uppercase;
-                letter-spacing: 1px;
-                display: inline-flex;
-                align-items: center;
-                transition: all 0.3s ease;
-                box-shadow: 0 5px 15px rgba(218, 165, 32, 0.3);
-            }
-            
-            .back-btn:hover {
-                transform: translateY(-3px);
-                box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
-                background: linear-gradient(45deg, var(--gold-secondary), var(--gold-primary));
-                color: black;
-            }
-            
-            .back-btn i {
-                margin-right: 10px;
-            }
-            
-            .footer {
-                margin-top: 40px;
-                text-align: center;
-                padding: 20px;
-                font-size: 0.8rem;
-                border-top: 1px solid var(--gold-border);
+                margin-bottom: 30px;
             }
             
             .search-filter {
@@ -308,35 +183,95 @@
                 color: var(--gold-secondary);
             }
             
-            .filter-dropdown {
-                padding: 10px 20px;
-                border-radius: 20px;
-                border: 1px solid var(--gold-border);
-                background: rgba(0, 0, 0, 0.3);
-                color: var(--gold-primary);
-                min-width: 150px;
-                cursor: pointer;
+            .table-container {
+                overflow-x: auto;
+                margin-top: 20px;
+                border-radius: 12px;
+                box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
             }
             
-            .add-user-btn {
-                background: linear-gradient(45deg, var(--gold-secondary), var(--gold-bright));
+            .user-table {
+                width: 100%;
+                border-collapse: separate;
+                border-spacing: 0;
+                overflow: hidden;
+            }
+            
+            .user-table thead tr {
+                background: linear-gradient(45deg, var(--gold-secondary), var(--gold-primary));
                 color: black;
-                padding: 10px 20px;
-                border-radius: 30px;
                 font-weight: 600;
-                border: none;
-                display: inline-flex;
-                align-items: center;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+            }
+            
+            .user-table thead th {
+                padding: 15px 12px;
+                text-align: center;
+                font-size: 0.85rem;
+                white-space: nowrap;
+            }
+            
+            .user-table tbody tr {
+                border-bottom: 1px solid rgba(255, 215, 0, 0.1);
                 transition: all 0.3s ease;
             }
             
-            .add-user-btn:hover {
-                transform: translateY(-2px);
-                box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+            .user-table tbody tr:hover {
+                background-color: rgba(255, 215, 0, 0.05);
+                transform: scale(1.003);
             }
             
-            .add-user-btn i {
-                margin-right: 8px;
+            .user-table td {
+                padding: 15px 10px;
+                vertical-align: middle;
+                text-align: center;
+                font-size: 0.9rem;
+            }
+            
+            .badge-admin {
+                background: linear-gradient(45deg, #dc3545, #ff5a5f);
+                color: white;
+                padding: 6px 15px;
+                border-radius: 20px;
+                font-weight: 600;
+                font-size: 0.8rem;
+                letter-spacing: 0.5px;
+                display: inline-block;
+            }
+            
+            .badge-user {
+                background: linear-gradient(45deg, #198754, #28a745);
+                color: white;
+                padding: 6px 15px;
+                border-radius: 20px;
+                font-weight: 600;
+                font-size: 0.8rem;
+                letter-spacing: 0.5px;
+                display: inline-block;
+            }
+            
+            .btn-delete {
+                background: linear-gradient(45deg, #dc3545, #f55);
+                color: white;
+                border: none;
+                padding: 8px 16px;
+                border-radius: 20px;
+                font-weight: 600;
+                font-size: 0.9rem;
+                transition: all 0.3s ease;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            .btn-delete:hover {
+                transform: scale(1.05);
+                box-shadow: 0 0 15px rgba(220, 53, 69, 0.4);
+            }
+            
+            .btn-delete i {
+                margin-right: 6px;
             }
             
             .pagination-container {
@@ -368,6 +303,7 @@
                 font-weight: 500;
                 transition: all 0.3s ease;
                 border: 1px solid var(--gold-border);
+                text-decoration: none;
             }
             
             .page-link:hover, .page-item.active .page-link {
@@ -375,6 +311,61 @@
                 color: black;
                 box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
                 border-color: transparent;
+            }
+            
+            .empty-state {
+                text-align: center;
+                padding: 40px 20px;
+            }
+            
+            .empty-icon {
+                font-size: 50px;
+                margin-bottom: 20px;
+                color: var(--gold-secondary);
+                opacity: 0.5;
+            }
+            
+            .empty-text {
+                font-size: 1.2rem;
+                font-weight: 500;
+                color: var(--gold-secondary);
+                margin-bottom: 20px;
+            }
+            
+            .back-btn {
+                background: linear-gradient(45deg, var(--gold-primary), var(--gold-secondary));
+                color: black;
+                border: none;
+                padding: 12px 25px;
+                border-radius: 30px;
+                font-weight: 600;
+                font-size: 1rem;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                display: inline-flex;
+                align-items: center;
+                transition: all 0.3s ease;
+                box-shadow: 0 5px 15px rgba(218, 165, 32, 0.3);
+                text-decoration: none;
+            }
+            
+            .back-btn:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
+                background: linear-gradient(45deg, var(--gold-secondary), var(--gold-primary));
+                color: black;
+            }
+            
+            .back-btn i {
+                margin-right: 10px;
+            }
+            
+            .footer {
+                margin-top: 40px;
+                text-align: center;
+                padding: 20px;
+                font-size: 0.8rem;
+                border-top: 1px solid var(--gold-border);
             }
             
             .restricted-container {
@@ -398,7 +389,7 @@
             
             .restricted-icon {
                 font-size: 50px;
-                color: var(--red-danger);
+                color: #FF4136;
                 margin-bottom: 20px;
             }
             
@@ -426,25 +417,6 @@
                 margin: 0 5px;
             }
             
-            .return-home {
-                display: inline-block;
-                background: linear-gradient(45deg, var(--gold-primary), var(--gold-secondary));
-                color: black;
-                padding: 12px 25px;
-                border-radius: 30px;
-                text-decoration: none;
-                font-weight: 600;
-                letter-spacing: 1px;
-                margin-top: 20px;
-                transition: all 0.3s ease;
-            }
-            
-            .return-home:hover {
-                transform: translateY(-3px);
-                box-shadow: 0 10px 20px rgba(255, 215, 0, 0.3);
-                color: black;
-            }
-            
             /* Responsive tweaks */
             @media (max-width: 992px) {
                 .stats-row {
@@ -464,10 +436,16 @@
                 .admin-title {
                     font-size: 1.8rem;
                 }
-                .user-table thead th {
+                .btn-delete {
+                    padding: 6px 12px;
                     font-size: 0.8rem;
                 }
-                .add-user-btn, .filter-dropdown {
+                .user-table thead th {
+                    font-size: 0.75rem;
+                    padding: 12px 8px;
+                }
+                .user-table td {
+                    padding: 12px 8px;
                     font-size: 0.8rem;
                 }
             }
@@ -477,15 +455,20 @@
                     flex-direction: column;
                     align-items: stretch;
                 }
-                .search-box, .filter-dropdown {
+                .search-box {
                     width: 100%;
+                    margin-bottom: 10px;
                 }
-                .action-btns {
-                    display: flex;
+                .admin-header {
                     flex-direction: column;
+                    text-align: center;
                 }
-                .action-btn {
-                    margin: 5px 0;
+                .admin-title:after {
+                    left: 20%;
+                    width: 60%;
+                }
+                .user-info {
+                    margin-top: 15px;
                 }
             }
             
@@ -507,192 +490,186 @@
         </style>
     </head>
     <body>
-        <%
-            Users u = (Users) session.getAttribute("users");
-            RoleDAO rd = new RoleDAO();
-            UserDAO ud = new UserDAO();
+        <jsp:useBean id="userDAO" class="dao.UserDAO" scope="page" />
+        
+        <c:if test="${sessionScope.users.idRole == 2}">
+            <c:set var="totalUsers" value="${userDAO.selectAll().size()}" />
+            <c:set var="adminCount" value="0" />
+            <c:set var="userCount" value="0" />
             
-            if (u != null && u.getIdRole() == 2) {
-                int totalUsers = ud.selectAll().size();
-                int adminUsers = 0;
-                int regularUsers = 0;
+            <c:forEach items="${userDAO.selectAll()}" var="user">
+                <c:if test="${user.idRole == 2}">
+                    <c:set var="adminCount" value="${adminCount + 1}" />
+                </c:if>
+                <c:if test="${user.idRole != 2}">
+                    <c:set var="userCount" value="${userCount + 1}" />
+                </c:if>
+            </c:forEach>
+
+            <div class="page-container">
+                <div class="admin-header animate__animated animate__fadeIn">
+                    <h1 class="admin-title">Quản Lý Người Dùng</h1>
+                    <div class="user-info">
+                        <i class="fas fa-user-shield"></i> ${sessionScope.users.name}
+                    </div>
+                </div>
                 
-                for (Users user : ud.selectAll()) {
-                    if (user.getIdRole() == 2) {
-                        adminUsers++;
-                    } else {
-                        regularUsers++;
-                    }
-                }
-        %>
-        <div class="page-container">
-            <div class="admin-header animate__animated animate__fadeIn">
-                <h2 class="admin-title">Quản Lý Người Dùng</h2>
-                <div class="user-info">
-                    <span><i class="fas fa-user-shield me-2"></i><%= u.getName() %></span>
-                </div>
-            </div>
-            
-            <div class="stats-row" data-aos="fade-up">
-                <div class="stat-card" data-aos="fade-up" data-aos-delay="100">
-                    <div class="stat-title"><i class="fas fa-users"></i>Tổng Người Dùng</div>
-                    <h3 class="stat-value"><%= totalUsers %></h3>
-                </div>
-                <div class="stat-card" data-aos="fade-up" data-aos-delay="200">
-                    <div class="stat-title"><i class="fas fa-user-shield"></i>Admin</div>
-                    <h3 class="stat-value"><%= adminUsers %></h3>
-                </div>
-                <div class="stat-card" data-aos="fade-up" data-aos-delay="300">
-                    <div class="stat-title"><i class="fas fa-user"></i>Người Dùng Thường</div>
-                    <h3 class="stat-value"><%= regularUsers %></h3>
-                </div>
-            </div>
-            
-            <div class="content-card" data-aos="fade-up" data-aos-delay="400">
-                <div class="search-filter">
-                    <div class="search-box">
-                        <i class="fas fa-search search-icon"></i>
-                        <input type="text" class="search-input" id="searchInput" placeholder="Tìm kiếm người dùng...">
+                <div class="stats-row">
+                    <div class="stat-card" data-aos="fade-up" data-aos-delay="100">
+                        <div class="stat-title"><i class="fas fa-users"></i> Tổng Người Dùng</div>
+                        <h3 class="stat-value">${totalUsers}</h3>
                     </div>
                     
-                </div>
-                
-                <div class="table-container">
-                    <table class="user-table" id="userTable">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Họ Tên</th>
-                                <th>Email</th>
-                                <th>Điện Thoại</th>
-                                <th>Vai Trò</th>
-                                <th>Hành Động</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <% 
-                                int delay = 100;
-                                for (Users u1 : ud.selectAll()) {
-                                    delay += 50;
-                            %>
-                            <tr class="animate-row" style="animation-delay: <%= delay %>ms">                        
-                                <td><%= u1.getIdUser() %></td>
-                                <td><%= u1.getName() %></td>
-                                <td><%= u1.getEmail() %></td>
-                                <td><%= u1.getPhone() %></td>
-                                <td>
-                                    <% if (u1.getIdRole() == 2) { %>
-                                        <span class="user-role admin">Admin</span>
-                                    <% } else { %>
-                                        <span class="user-role user">User</span>
-                                    <% } %>
-                                </td>
-                                <td class="action-btns">
-                                    <form action="DeleteUserServlet" method="GET" class="d-inline">
-                                        <input hidden="" type="text" name="idUser" value="<%= u1.getIdUser() %>">
-                                        <button class="action-btn delete-btn" type="submit">
-                                            <i class="fas fa-trash-alt btn-icon"></i> Xóa
-                                        </button>
-                                    </form>
+                    <div class="stat-card" data-aos="fade-up" data-aos-delay="200">
+                        <div class="stat-title"><i class="fas fa-user-shield"></i> Admin</div>
+                        <h3 class="stat-value">${adminCount}</h3>
+                    </div>
                     
-                                </td>
-                            </tr>
-                            <% } %>
-                        </tbody>
-                    </table>
+                    <div class="stat-card" data-aos="fade-up" data-aos-delay="300">
+                        <div class="stat-title"><i class="fas fa-user"></i> Người Dùng Thường</div>
+                        <h3 class="stat-value">${userCount}</h3>
+                    </div>
                 </div>
                 
-                <nav class="pagination-container" data-aos="fade-up">
-                    <ul class="pagination">
-                        <li class="page-item">
-                            <button class="page-link"><i class="fas fa-angle-left"></i></button>
-                        </li>
-                        <li class="page-item active"><button class="page-link">1</button></li>
-                        <li class="page-item"><button class="page-link">2</button></li>
-                        <li class="page-item"><button class="page-link">3</button></li>
-                        <li class="page-item">
-                            <button class="page-link"><i class="fas fa-angle-right"></i></button>
-                        </li>
-                    </ul>
-                </nav>
+                <div class="content-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="search-filter">
+                        <div class="search-box">
+                            <i class="fas fa-search search-icon"></i>
+                            <input type="text" class="search-input" id="searchInput" placeholder="Tìm kiếm theo tên, email, số điện thoại...">
+                        </div>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table class="user-table" id="userTable">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>HỌ TÊN</th>
+                                    <th>EMAIL</th>
+                                    <th>ĐIỆN THOẠI</th>
+                                    <th>VAI TRÒ</th>
+                                    <th>HÀNH ĐỘNG</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach items="${userDAO.selectAll()}" var="user" varStatus="status">
+                                    <tr class="animate-row" style="animation-delay: ${status.index * 50}ms">
+                                        <td>${user.idUser}</td>
+                                        <td>${user.name}</td>
+                                        <td>${user.email}</td>
+                                        <td>${user.phone}</td>
+                                        <td>
+                                            <c:choose>
+                                                <c:when test="${user.idRole == 2}">
+                                                    <span class="badge-admin">Admin</span>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <span class="badge-user">User</span>
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </td>
+                                        <td>
+                                            <form action="DeleteUserServlet" method="GET" style="display: inline;">
+                                                <input type="hidden" name="idUser" value="${user.idUser}">
+                                                <button type="submit" class="btn-delete">
+                                                    <i class="fas fa-trash"></i> Xóa
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <c:if test="${totalUsers > 10}">
+                        <nav class="pagination-container" data-aos="fade-up">
+                            <ul class="pagination">
+                                <li class="page-item">
+                                    <a href="#" class="page-link"><i class="fas fa-angle-left"></i></a>
+                                </li>
+                                <li class="page-item active">
+                                    <a href="#" class="page-link">1</a>
+                                </li>
+                                <li class="page-item">
+                                    <a href="#" class="page-link">2</a>
+                                </li>
+                                <li class="page-item">
+                                    <a href="#" class="page-link">3</a>
+                                </li>
+                                <li class="page-item">
+                                    <a href="#" class="page-link"><i class="fas fa-angle-right"></i></a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </c:if>
+                </div>
+                
+                <div class="text-center mt-5 mb-4" data-aos="fade-up">
+                    <a href="ADMIN.jsp" class="back-btn">
+                        <i class="fas fa-arrow-left"></i> Trở về trang Admin
+                    </a>
+                </div>
+                
+                <footer class="footer">
+                    <p>&copy; <fmt:formatDate value="<%= new java.util.Date() %>" pattern="yyyy" /> Hotel Management System. All rights reserved.</p>
+                </footer>
             </div>
-            
-            <div class="text-center mt-5 mb-4" data-aos="fade-up">
-                <a href="ADMIN.jsp" class="back-btn"style="text-decoration: none">
-                    <i class="fas fa-arrow-left"></i> Quay lại trang ADMIN
-                </a>
-            </div>
-            
-            <div class="footer">
-                <p>© 2025 Admin Dashboard. Thiết kế và phát triển</p>
-            </div>
-        </div>
+        </c:if>
         
-        <% } else { %>
-        <div class="restricted-container">
-            <div class="restricted-content animate__animated animate__fadeIn">
-                <i class="fas fa-exclamation-triangle restricted-icon"></i>
-                <h1 class="restricted-title">Truy Cập Bị Hạn Chế</h1>
-                <p>Bạn không có quyền truy cập vào trang này</p>
-                <p class="countdown-text">
-                    Chuyển hướng sau <span class="countdown-number" id="countdown">5</span> giây...
-                </p>
-                <a href="index.jsp" class="return-home">
-                    <i class="fas fa-home me-2"></i> Quay trở lại trang chủ
-                </a>
+        <c:if test="${sessionScope.users.idRole != 2}">
+            <div class="restricted-container">
+                <div class="restricted-content animate__animated animate__fadeIn">
+                    <i class="fas fa-exclamation-triangle restricted-icon"></i>
+                    <h2 class="restricted-title">Truy cập bị từ chối</h2>
+                    <p>Bạn không có quyền truy cập vào trang này.</p>
+                    <p class="countdown-text">
+                        Chuyển hướng sau <span class="countdown-number">5</span> giây
+                    </p>
+                    <a href="home.jsp" class="return-home">
+                        <i class="fas fa-home"></i> Về trang chủ
+                    </a>
+                </div>
             </div>
-        </div>
-        <% } %>
+        </c:if>
         
         <script>
+            // Initialize AOS library for animations
             AOS.init({
                 duration: 800,
                 easing: 'ease-in-out',
                 once: true
             });
             
-            // Countdown timer
-            let timeLeft = 5;
-            let countdownElement = document.getElementById("countdown");
-            if (countdownElement) {
-                let countdownTimer = setInterval(function () {
-                    timeLeft--;
-                    countdownElement.textContent = timeLeft;
-                    if (timeLeft <= 0) {
-                        clearInterval(countdownTimer);
-                        window.location.href = "index.jsp";
+            // Search functionality
+            document.getElementById('searchInput').addEventListener('keyup', function() {
+                const searchValue = this.value.toLowerCase();
+                const table = document.getElementById('userTable');
+                const rows = table.getElementsByTagName('tr');
+                
+                for (let i = 1; i < rows.length; i++) {
+                    if (rows[i].textContent.toLowerCase().includes(searchValue)) {
+                        rows[i].style.display = '';
+                    } else {
+                        rows[i].style.display = 'none';
+                    }
+                }
+            });
+            
+            // Countdown redirect for restricted access
+            if (document.querySelector('.countdown-number')) {
+                let seconds = 5;
+                const countdownElement = document.querySelector('.countdown-number');
+                
+                const countdown = setInterval(() => {
+                    seconds--;
+                    countdownElement.textContent = seconds;
+                    
+                    if (seconds <= 0) {
+                        clearInterval(countdown);
+                        window.location.href = 'home.jsp';
                     }
                 }, 1000);
-            }
-            
-            // Search functionality
-            const searchInput = document.getElementById('searchInput');
-            if (searchInput) {
-                searchInput.addEventListener('keyup', function() {
-                    const searchValue = this.value.toLowerCase();
-                    const table = document.getElementById('userTable');
-                    const rows = table.getElementsByTagName('tr');
-                    
-                    for (let i = 1; i < rows.length; i++) {
-                        let found = false;
-                        const cells = rows[i].getElementsByTagName('td');
-                        
-                        for (let j = 0; j < cells.length; j++) {
-                            const cellText = cells[j].textContent || cells[j].innerText;
-                            
-                            if (cellText.toLowerCase().indexOf(searchValue) > -1) {
-                                found = true;
-                                break;
-                            }
-                        }
-                        
-                        if (found) {
-                            rows[i].style.display = '';
-                        } else {
-                            rows[i].style.display = 'none';
-                        }
-                    }
-                });
             }
         </script>
     </body>
