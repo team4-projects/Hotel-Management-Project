@@ -400,8 +400,8 @@
                 <p class="countdown-text">
                     Chuyển hướng sau <span class="countdown-number" id="countdown">5</span> giây...
                 </p>
-                <a href="index.jsp" class="return-home">
-                    <i class="fas fa-home me-2"></i> Quay trở lại trang chủ
+                <a href="index.jsp" class="return-home" style="text-decoration: none">
+                    <i class="fas fa-home me-2" style="text-decoration: none"></i> Quay trở lại trang chủ
                 </a>
             </div>
         </div>

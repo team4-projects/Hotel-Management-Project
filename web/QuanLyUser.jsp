@@ -619,18 +619,18 @@
         
         <c:if test="${sessionScope.users.idRole != 2}">
             <div class="restricted-container">
-                <div class="restricted-content animate__animated animate__fadeIn">
-                    <i class="fas fa-exclamation-triangle restricted-icon"></i>
-                    <h2 class="restricted-title">Truy cập bị từ chối</h2>
-                    <p>Bạn không có quyền truy cập vào trang này.</p>
-                    <p class="countdown-text">
-                        Chuyển hướng sau <span class="countdown-number">5</span> giây
-                    </p>
-                    <a href="home.jsp" class="return-home">
-                        <i class="fas fa-home"></i> Về trang chủ
-                    </a>
-                </div>
+            <div class="restricted-content animate__animated animate__fadeIn">
+                <i class="fas fa-exclamation-triangle restricted-icon"></i>
+                <h2 class="restricted-title">Truy cập bị từ chối</h2>
+                <p>Bạn không có quyền truy cập vào trang này.</p>
+                <p class="countdown-text">
+                    Chuyển hướng sau <span class="countdown-number">5</span> giây
+                </p>
+                <a href="index.jsp" class="return-home" style="text-decoration: none">
+                    <i class="fas fa-home" style="text-decoration: none"></i> Về trang chủ
+                </a>
             </div>
+        </div>
         </c:if>
         
         <script>
@@ -667,7 +667,7 @@
                     
                     if (seconds <= 0) {
                         clearInterval(countdown);
-                        window.location.href = 'home.jsp';
+                        window.location.href = 'index.jsp';
                     }
                 }, 1000);
             }

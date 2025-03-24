@@ -863,8 +863,8 @@
                 <p class="countdown-text">
                     Chuyển hướng sau <span class="countdown-number">5</span> giây
                 </p>
-                <a href="home.jsp" class="return-home">
-                    <i class="fas fa-home"></i> Về trang chủ
+                <a href="index.jsp" class="return-home" style="text-decoration: none">
+                    <i class="fas fa-home" style="text-decoration: none"></i> Về trang chủ
                 </a>
             </div>
         </div>
@@ -880,7 +880,7 @@
                 
                 if (seconds <= 0) {
                     clearInterval(countdown);
-                    window.location.href = 'home.jsp';
+                    window.location.href = 'index.jsp';
                 }
             }, 1000);
         </script>
