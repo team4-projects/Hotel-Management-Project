@@ -9,6 +9,7 @@ import java.sql.*;
 
 import java.util.ArrayList;
 import model.Booking;
+import model.Room;
 
 /**
  *
@@ -154,7 +155,41 @@ public class BookingDAO implements DaoInterface<Booking> {
 
     @Override
     public int delete(Booking t) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public ArrayList<Room> getAvailableRooms(Date checkIn, Date checkOut) {
+        ArrayList<Room> availableRooms = new ArrayList<>();
+        try {
+            Connection connection = JDBCUtil.getConnection();
+
+            // Lấy các phòng không có trong booking hoặc không trùng thời gian
+            String sql = "SELECT DISTINCT r.* FROM Room r " +
+                        "WHERE r.idRoom NOT IN " +
+                        "(SELECT b.idRoom FROM Booking b " +
+                        "WHERE (b.checkInDate <= ? AND b.checkOutDate >= ?))";
+
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setDate(1, checkOut);
+            statement.setDate(2, checkIn);
+
+            ResultSet rs = statement.executeQuery();
+
+            while (rs.next()) {
+                Room room = new Room();
+                room.setIdRoom(rs.getInt("idRoom"));
+                room.setNameRoom(rs.getString("nameRoom"));
+                room.setPrice(rs.getFloat("price"));
+                availableRooms.add(room);
+            }
+
+            rs.close();
+            statement.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return availableRooms;
     }
 
 }

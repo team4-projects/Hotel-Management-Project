@@ -58,7 +58,36 @@ public class UserDAO implements DaoInterface<Users> {
 
     @Override
     public int update(Users t) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        int ketQua = 0;
+        try {
+            // Bước 1: tạo kết nối đến CSDL
+            Connection con = JDBCUtil.getConnection();
+
+            // Bước 2: tạo ra đối tượng statement
+            String sql = "UPDATE Users SET name=?, password=?, email=?, phone=?, idRole=? WHERE idUser=?";
+            PreparedStatement st = con.prepareStatement(sql);
+            st.setString(1, t.getName());
+            st.setString(2, t.getPassWord());
+            st.setString(3, t.getEmail());
+            st.setString(4, t.getPhone());
+            st.setInt(5, t.getIdRole());
+            st.setInt(6, t.getIdUser());
+
+            // Bước 3: thực thi câu lệnh SQL
+            System.out.println(sql);
+            ketQua = st.executeUpdate();
+
+            // Bước 4:
+            System.out.println("Bạn đã thực thi: " + sql);
+            System.out.println("Có " + ketQua + " dòng bị thay đổi!");
+
+            // Bước 5:
+            JDBCUtil.closeConnection(con);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return ketQua;
     }
 
     @Override

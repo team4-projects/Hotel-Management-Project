@@ -5,7 +5,6 @@
 package controller;
 
 import dao.UserDAO;
-import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,6 +12,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import model.Users;
 
 /**
@@ -60,15 +60,30 @@ public class DeleteUserServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String idUser = request.getParameter("idUser");
-        UserDAO ud = new UserDAO();
-        Users u = new Users();
-        u.setIdUser(Integer.parseInt(idUser));
-        String url = "/QuanLyUser.jsp";
-        ud.delete(u);
-        
-        RequestDispatcher rd = getServletContext().getRequestDispatcher(url);
-        rd.forward(request, response);
+        try {
+            String id = request.getParameter("id");
+            if (id == null || id.trim().isEmpty()) {
+                response.sendRedirect("QuanLyUser.jsp?error=invalid_id");
+                return;
+            }
+
+            UserDAO ud = new UserDAO();
+            Users u = new Users();
+            u.setIdUser(Integer.parseInt(id));
+            
+            int result = ud.delete(u);
+            
+            if (result > 0) {
+                response.sendRedirect("QuanLyUser.jsp?success=delete");
+            } else {
+                response.sendRedirect("QuanLyUser.jsp?error=delete_failed");
+            }
+        } catch (NumberFormatException e) {
+            response.sendRedirect("QuanLyUser.jsp?error=invalid_id");
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.sendRedirect("QuanLyUser.jsp?error=system_error");
+        }
     }
 
     /**
@@ -82,7 +97,7 @@ public class DeleteUserServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        doGet(request, response);
     }
 
     /**
